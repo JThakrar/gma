@@ -1,0 +1,19 @@
+
+PROG_NAME=$0
+export PROG_DIR=`dirname $PROG_NAME`
+export APP_HOME=$(cd $PROG_DIR/.. ; pwd)
+export DATA_DIR=${APP_HOME}/data
+export LIB_DIR=${APP_HOME}/lib
+export JAR_NAME=default.gma-1.0.jar
+export CLASS_NAME="Run"
+
+if [[ ${SPARK_HOME} == "" ]]
+then
+    echo "Require Apache Spark 2.2.x to be setup to run $PROG_NAME."
+    echo "Cannot continue..."
+    exit 1
+fi
+
+$SPARK_HOME/bin/spark-submit --master 'local[*]' --class ${CLASS_NAME} ${LIB_DIR}/${JAR_NAME} $*
+
+
